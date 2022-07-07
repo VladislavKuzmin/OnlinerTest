@@ -5,6 +5,7 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import pages.CatalogPage;
 import pages.MainPage;
 
 public class Test {
@@ -47,9 +48,14 @@ public class Test {
                 .pressSmartPhonesButton()
                 .scrollToAppleCheckBox()
                 .pressAppleCheckBox()
-                        .pressPhoneModelButton()
+                        .waitForPriceToUpdate()
                 .getPrice());
+        System.out.println(actualPrice);
 
-        Assert.isTrue(actualPrice > 100, "арр");
+        if(new CatalogPage(driver).getPhoneModel().contains("iPhone")){
+            Assert.isTrue(actualPrice > 100, "Price supposed to be greater than 100BYN");
+        }
     }
+
+
 }

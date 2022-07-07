@@ -16,7 +16,7 @@ public class BasePage {
 
     public BasePage(WebDriver driver){
         this.driver = driver;
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(30));
         action = new Actions(driver);
         je = (JavascriptExecutor) driver;
     }
@@ -33,12 +33,16 @@ public class BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
 
+    protected String getText(By locator){
+        return findElement(locator).getText();
+    }
+
     protected void click(By locator){
         waitClickability(locator);
         findElement(locator).click();
     }
 
-    protected void scroll(){
+    protected void scrollBy300(){
         je.executeScript("window.scrollBy(0,300)", "");
     }
 
