@@ -3,12 +3,11 @@ package Tests;
 import dev.failsafe.internal.util.Assert;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import pages.CatalogPage;
 import pages.MainPage;
 
-public class Test {
+public class TestsClass {
 
     static WebDriver driver;
 
@@ -29,31 +28,32 @@ public class Test {
 
     @AfterEach
     public void tearDown(){
-       // driver.quit();
+        driver.quit();
     }
 
     @AfterAll
     public static void end(){
-        System.out.println("Tests ended");
+        System.out.println("The tests are over");
     }
 
-    @org.junit.jupiter.api.Test
-    public void priceMatch_TEST(){
+    @Test
+    public void verifyPriceAmount_TEST(){
         MainPage mainPage = new MainPage(driver);
 
-        int actualPrice = Integer.parseInt(
+        double actualPrice = Double.parseDouble(
                 mainPage.pressCatalogButton()
                 .pressElectronicsButton()
                 .moveToPhones()
                 .pressSmartPhonesButton()
                 .scrollToAppleCheckBox()
                 .pressAppleCheckBox()
-                        .waitForPriceToUpdate()
+                .waitForPriceToUpdate()
                 .getPrice());
+
         System.out.println(actualPrice);
 
         if(new CatalogPage(driver).getPhoneModel().contains("iPhone")){
-            Assert.isTrue(actualPrice > 100, "Price supposed to be greater than 100BYN");
+            Assert.isTrue(actualPrice > 100, "The price should be more than 100 BYN");
         }
     }
 

@@ -2,23 +2,20 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 
 public class CatalogPage extends BasePage{
 
-    By electronicsButton = By.xpath("//li[@data-id='1']");
-    By phonesPanel = By.xpath("//*[@id='container']/div/div/div/div/div[1]/div[4]/div/div[2]/div[1]/div/div[1]/div[1]");
+    By electronicsButton = By.xpath("//span[contains(text(),'Электроника')]");
+    By phonesPanel = By.xpath("//div[contains(text(),'Мобильные телефоны')]");
     By smartPhonesButton = By.xpath("//a[@href='https://catalog.onliner.by/mobile']");
-    //By appleCheckBox = By.xpath("//input[@value='apple']");
-    By appleCheckBox = By.xpath("//*[@id='schema-filter']/div[5]/div[4]/div[2]/ul/li[1]/label");
-    By priceLabel = By.xpath("//*[@id='schema-products']/div[2]/div/div[3]/div[1]/div/div/div[1]/div[1]/a/span");
-    By phoneModelLabel = By.xpath("//span[@data-bind='html: product.extended_name || product.full_name']");  //!
 
-    String str;
+    By appleCheckBox = By.xpath("//span[contains(text(), 'Apple') and @class='schema-filter__checkbox-text']");//!
+    By priceLabel = By.xpath("//div[@class='schema-product__price']//span");
+    By phoneModelLabel = By.xpath("//div[@class='schema-product__title']//span");  //!
+
+    String priceUpdateChecker;
 
     public CatalogPage(WebDriver driver){
         super(driver);
@@ -45,7 +42,7 @@ public class CatalogPage extends BasePage{
     }
 
     public CatalogPage pressAppleCheckBox(){
-        str = findElement(priceLabel).getText();
+        priceUpdateChecker = findElement(priceLabel).getText();
         click(appleCheckBox);
 
         return this;
@@ -56,11 +53,11 @@ public class CatalogPage extends BasePage{
     }
 
     public CatalogPage waitForPriceToUpdate(){
-        wait.until(ExpectedConditions.invisibilityOfElementWithText(priceLabel,str));
+        wait.until(ExpectedConditions.invisibilityOfElementWithText(priceLabel,priceUpdateChecker));
         return this;
     }
 
     public String getPrice(){
-        return getText(priceLabel).replaceAll("[,. р]", "");
+        return  getText(priceLabel).replaceAll("[. р]", "").replace(',','.');
     }
 }

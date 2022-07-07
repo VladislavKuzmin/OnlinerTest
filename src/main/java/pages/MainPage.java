@@ -5,7 +5,7 @@ import org.openqa.selenium.WebDriver;
 
 public class MainPage extends BasePage{
 
-    By catalogButton = By.xpath("//*[@id='onliner-catalog-purchases']/header/h2/a");
+    By catalogButton = By.xpath("//a[contains(text(),'Каталог')]");
 
     public MainPage(WebDriver driver){
         super(driver);
