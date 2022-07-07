@@ -11,9 +11,9 @@ public class CatalogPage extends BasePage{
     By phonesPanel = By.xpath("//div[contains(text(),'Мобильные телефоны')]");
     By smartPhonesButton = By.xpath("//a[@href='https://catalog.onliner.by/mobile']");
 
-    By appleCheckBox = By.xpath("//span[contains(text(), 'Apple') and @class='schema-filter__checkbox-text']");//!
+    By appleCheckBox = By.xpath("//span[contains(text(), 'Apple') and @class='schema-filter__checkbox-text']");
     By priceLabel = By.xpath("//div[@class='schema-product__price']//span");
-    By phoneModelLabel = By.xpath("//div[@class='schema-product__title']//span");  //!
+    By phoneModelLabel = By.xpath("//div[@class='schema-product__title']//span");
 
     String priceUpdateChecker;
 
@@ -48,13 +48,13 @@ public class CatalogPage extends BasePage{
         return this;
     }
 
-    public String getPhoneModel(){
-        return getText(phoneModelLabel);
-    }
-
     public CatalogPage waitForPriceToUpdate(){
         wait.until(ExpectedConditions.invisibilityOfElementWithText(priceLabel,priceUpdateChecker));
         return this;
+    }
+
+    public String getPhoneModel(){
+        return getText(phoneModelLabel);
     }
 
     public String getPrice(){
